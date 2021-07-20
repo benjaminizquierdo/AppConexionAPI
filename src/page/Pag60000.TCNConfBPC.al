@@ -60,6 +60,18 @@ page 60000 "TCNConfBPC"
 
                 end;
             }
+            action(ConsulMovIntradia)
+            {
+                ApplicationArea = All;
+                Caption = 'Movimientos IntraDia';
+                Image = AbsenceCategories;
+                trigger OnAction()
+                var
+                    culTCNFunciones: Codeunit TCNFunciones;
+                begin
+                    culTCNFunciones.MovIntraDiaF(Rec.UrlMovIntraDia);
+                end;
+            }
         }
     }
 
