@@ -19,7 +19,7 @@ codeunit 60000 "TCNFunciones"
     begin
         xlHttpContent.Clear();
         xlHttpClient.DefaultRequestHeaders.Clear();
-        xlHttpClient.DefaultRequestHeaders.Add(clAuthorization, StrSubstNo(cBearerAuth, '222222222'));
+        xlHttpClient.DefaultRequestHeaders.Add(clAuthorization, StrSubstNo(cBearerAuth, 'eyJhbGciOiJIUzI1NiJ9.eyJkYXRhIjoibm9EYXRhIn0.MtwfQWFeIBShcwLcDo2ybxKErCLuvhxA0H1tDaX7zL8'));
 
         xlHttpRequestMessage.Content := xlHttpContent;
         xlHttpRequestMessage.SetRequestUri(pUrlMovCierre);
