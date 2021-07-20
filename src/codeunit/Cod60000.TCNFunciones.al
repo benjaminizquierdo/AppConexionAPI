@@ -1,5 +1,8 @@
 codeunit 60000 "TCNFunciones"
 {
+    var
+        cBearerAuth: Label 'Bearer %1';
+
 
     procedure MovCierreF(pUrlMovCierre: text)
     var
@@ -7,14 +10,28 @@ codeunit 60000 "TCNFunciones"
         culTCNFuncionesComunes: Codeunit TCN_FuncionesComunes;
         xlHttpClient: HttpClient;
         xlHttpContent: HttpContent;
+        xlHttpHeaders: HttpHeaders;
+        xlHttpRequestMessage: HttpRequestMessage;
         xlHttpResponseMessage: HttpResponseMessage;
+        clAuthorization: Label 'Authorization';
+        clMetodh: Label 'POST';
         xlOutputText: text;
     begin
-        if xlHttpClient.Post(pUrlMovCierre, xlHttpContent, xlHttpResponseMessage) and (xlHttpResponseMessage.IsSuccessStatusCode) then begin
+        xlHttpContent.Clear();
+        xlHttpClient.DefaultRequestHeaders.Clear();
+        xlHttpClient.DefaultRequestHeaders.Add(clAuthorization, StrSubstNo(cBearerAuth, '222222222'));
+
+        xlHttpRequestMessage.Content := xlHttpContent;
+        xlHttpRequestMessage.SetRequestUri(pUrlMovCierre);
+        xlHttpRequestMessage.Method := clMetodh;
+
+        if xlHttpClient.Send(xlHttpRequestMessage, xlHttpResponseMessage) and (xlHttpResponseMessage.IsSuccessStatusCode) then begin
             xlHttpResponseMessage.Content.ReadAs(xlOutputText);
             Message(xlOutputText);
         end else begin
-            culTCNFuncionesComunes.ErrorF(xlHttpResponseMessage.ReasonPhrase);
+            // culTCNFuncionesComunes.ErrorF(xlHttpResponseMessage.ReasonPhrase);
+            xlHttpResponseMessage.Content.ReadAs(xlOutputText);
+            Message(xlOutputText);
         end;
     end;
 
@@ -25,22 +42,30 @@ codeunit 60000 "TCNFunciones"
         xlHttpClient: HttpClient;
         xlHttpContent: HttpContent;
         xlHttpHeaders: HttpHeaders;
+        xlHttpRequestMessage: HttpRequestMessage;
         xlHttpResponseMessage: HttpResponseMessage;
+        clAuthorization: Label 'Authorization';
+        clMetodh: Label 'POST';
         xlOutputText: text;
         xlTextBuilder: TextBuilder;
     begin
-        xlTextBuilder.AppendLine('{');
-        xlTextBuilder.AppendLine('"exportados": true,');
-        xlTextBuilder.AppendLine('"fechaDesdeOperacion": "01/01/2021",');
-        xlTextBuilder.AppendLine('"fechaHastaOperacion": "31/12/2021"');
-        xlTextBuilder.AppendLine('}');
-        xlHttpContent.WriteFrom(xlTextBuilder.ToText());
+        xlHttpContent.Clear();
+        xlHttpContent.WriteFrom(makeJsonAuth());
+        xlHttpClient.DefaultRequestHeaders.Clear();
+        xlHttpClient.DefaultRequestHeaders.Add(clAuthorization, StrSubstNo(cBearerAuth, '222222222'));
 
-        if xlHttpClient.Post(pUrlMovIntraDia, xlHttpContent, xlHttpResponseMessage) and (xlHttpResponseMessage.IsSuccessStatusCode) then begin
+
+        xlHttpRequestMessage.Content := xlHttpContent;
+        xlHttpRequestMessage.SetRequestUri(pUrlMovIntraDia);
+        xlHttpRequestMessage.Method := clMetodh;
+
+        if xlHttpClient.Send(xlHttpRequestMessage, xlHttpResponseMessage) and (xlHttpResponseMessage.IsSuccessStatusCode) then begin
             xlHttpResponseMessage.Content.ReadAs(xlOutputText);
             Message(xlOutputText);
         end else begin
-            culTCNFuncionesComunes.ErrorF(xlHttpResponseMessage.ReasonPhrase);
+            // culTCNFuncionesComunes.ErrorF(xlHttpResponseMessage.ReasonPhrase);
+            xlHttpResponseMessage.Content.ReadAs(xlOutputText);
+            Message(xlOutputText);
         end;
     end;
 
@@ -54,19 +79,17 @@ codeunit 60000 "TCNFunciones"
 
     procedure ObtenerAccesoF(pUrlLogin: text)
     var
-        culTCNFuncionesComunes: Codeunit TCN_FuncionesComunes;
         rlTCNConfBPC: Record TCNConfBPC;
-        clContentType: Label 'Content-Type';
-        clAccept: Label 'Accept';
-        clAplicationJson: Label 'application/json';
-        clMetodh: Label 'POST';
+        culTCNFuncionesComunes: Codeunit TCN_FuncionesComunes;
         xlHttpClient: HttpClient;
         xlHttpContent: HttpContent;
         xlHttpHeaders: HttpHeaders;
         xlHttpRequestMessage: HttpRequestMessage;
         xlHttpResponseMessage: HttpResponseMessage;
+        clAplicationJson: Label 'application/json';
+        clContentType: Label 'Content-Type';
+        clMetodh: Label 'POST';
         xlOutputText: text;
-        xlBody: text;
     begin
         if rlTCNConfBPC.FindFirst() then begin
             xlHttpContent.Clear();
@@ -88,6 +111,18 @@ codeunit 60000 "TCNFunciones"
                 Message(xlOutputText);
             end;
         end;
+    end;
+
+    local procedure makeJsonAuth() xlsalida: Text;
+    var
+        xlTextBuilder: TextBuilder;
+    begin
+        xlTextBuilder.AppendLine('{');
+        xlTextBuilder.AppendLine('"exportados": true,');
+        xlTextBuilder.AppendLine('"fechaDesdeOperacion": "01/01/2021",');
+        xlTextBuilder.AppendLine('"fechaHastaOperacion": "31/12/2021"');
+        xlTextBuilder.AppendLine('}');
+        xlsalida := xlTextBuilder.ToText();
     end;
 
 
