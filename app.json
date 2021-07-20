@@ -1,0 +1,25 @@
+{
+  "id": "99b6d366-2e4f-4149-a7f8-e4762de7f5f4",
+  "name": "Prueba Conexion API",
+  "publisher": "TCN",
+  "brief": "BPC",
+  "description": "",
+  "version": "1.0.0.0",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "./Logo/Tecon.png",
+  "capabilities": [],
+  "dependencies": [
+    {"appId": "09e8e853-9a52-43c6-a954-1a4a69cd7cbc","name": "Tecon AddOn Comun","publisher": "TCN","version": "1.0.20210715.0"}
+  ],
+  "screenshots": [],
+  "platform": "13.0.0.0",
+  "application": "13.0.0.0",
+  "idRange": {"from": 60000,"to": 60100},
+  "runtime": "2.1",
+  "target": "Extension",
+  "showMyCode": true,
+  "features": ["NoImplicitWith"]
+}
