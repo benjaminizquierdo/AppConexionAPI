@@ -64,7 +64,6 @@ codeunit 60000 "TCNFunciones"
         xlHttpContent: HttpContent;
         xlHttpHeaders: HttpHeaders;
         xlHttpRequestMessage: HttpRequestMessage;
-        xlTextBuilder: TextBuilder;
         xlHttpResponseMessage: HttpResponseMessage;
         xlOutputText: text;
         xlBody: text;
@@ -73,10 +72,15 @@ codeunit 60000 "TCNFunciones"
         xlBody := xlOutputText;
         xlBody := xlOutputText;
 
-        // xlTextBuilder.Append();
         xlHttpContent.Clear();
         xlHttpContent.WriteFrom('{"user": "key","pass": "secret"}');
+        xlHttpContent.ReadAs(xlBody);
+
         xlHttpContent.GetHeaders(xlHttpHeaders);
+        xlHttpHeaders.Remove(clContentType);
+        // xlHttpHeaders.Remove(clAccept);
+        xlHttpHeaders.Add(clContentType, clAplicationJson);
+        // xlHttpHeaders.Add(clAccept, clAplicationJson);
 
         xlHttpRequestMessage.Content := xlHttpContent;
         xlHttpRequestMessage.SetRequestUri(pUrlLogin);
@@ -84,10 +88,10 @@ codeunit 60000 "TCNFunciones"
         xlHttpClient.Timeout(-1);
         if xlHttpClient.Send(xlHttpRequestMessage, xlHttpResponseMessage) and xlHttpResponseMessage.IsSuccessStatusCode then begin
             xlHttpResponseMessage.Content.ReadAs(xlOutputText);
-            Message(xlOutputText + 'true');
+            Message(xlOutputText);
         end else begin
-            culTCNFuncionesComunes.ErrorF(xlHttpResponseMessage.ReasonPhrase);
-            Message(xlOutputText + 'false');
+            xlHttpResponseMessage.Content.ReadAs(xlOutputText);
+            Message(xlOutputText);
         end;
 
 
