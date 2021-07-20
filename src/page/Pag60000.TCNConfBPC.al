@@ -56,8 +56,22 @@ page 60000 "TCNConfBPC"
                 Caption = 'Obtener Acceso';
                 Image = AbsenceCategories;
                 trigger OnAction()
+                var
+                    culTCNFunciones: Codeunit TCNFunciones;
                 begin
-
+                    culTCNFunciones.ObtenerAccesoF(Rec.UrlLogin);
+                end;
+            }
+            action(ConsulMovCierre)
+            {
+                ApplicationArea = All;
+                Caption = 'Movimientos Cierre';
+                Image = AbsenceCategories;
+                trigger OnAction()
+                var
+                    culTCNFunciones: Codeunit TCNFunciones;
+                begin
+                    culTCNFunciones.MovCierreF(Rec.UrlMovCierre);
                 end;
             }
             action(ConsulMovIntradia)
