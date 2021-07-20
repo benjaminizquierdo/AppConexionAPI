@@ -68,34 +68,26 @@ codeunit 60000 "TCNFunciones"
         xlOutputText: text;
         xlBody: text;
     begin
-        xlBody := xlOutputText;
-        xlBody := xlOutputText;
-        xlBody := xlOutputText;
+        if rlTCNConfBPC.FindFirst() then begin
+            xlHttpContent.Clear();
+            xlHttpContent.WriteFrom('{"user": "' + rlTCNConfBPC.User + '","pass": "' + rlTCNConfBPC." Password" + '"}');
 
-        xlHttpContent.Clear();
-        xlHttpContent.WriteFrom('{"user": "key","pass": "secret"}');
-        xlHttpContent.ReadAs(xlBody);
+            xlHttpContent.GetHeaders(xlHttpHeaders);
+            xlHttpHeaders.Remove(clContentType);
+            xlHttpHeaders.Add(clContentType, clAplicationJson);
 
-        xlHttpContent.GetHeaders(xlHttpHeaders);
-        xlHttpHeaders.Remove(clContentType);
-        // xlHttpHeaders.Remove(clAccept);
-        xlHttpHeaders.Add(clContentType, clAplicationJson);
-        // xlHttpHeaders.Add(clAccept, clAplicationJson);
-
-        xlHttpRequestMessage.Content := xlHttpContent;
-        xlHttpRequestMessage.SetRequestUri(pUrlLogin);
-        xlHttpRequestMessage.Method := clMetodh;
-        xlHttpClient.Timeout(-1);
-        if xlHttpClient.Send(xlHttpRequestMessage, xlHttpResponseMessage) and xlHttpResponseMessage.IsSuccessStatusCode then begin
-            xlHttpResponseMessage.Content.ReadAs(xlOutputText);
-            Message(xlOutputText);
-        end else begin
-            xlHttpResponseMessage.Content.ReadAs(xlOutputText);
-            Message(xlOutputText);
+            xlHttpRequestMessage.Content := xlHttpContent;
+            xlHttpRequestMessage.SetRequestUri(pUrlLogin);
+            xlHttpRequestMessage.Method := clMetodh;
+            xlHttpClient.Timeout(-1);
+            if xlHttpClient.Send(xlHttpRequestMessage, xlHttpResponseMessage) and xlHttpResponseMessage.IsSuccessStatusCode then begin
+                xlHttpResponseMessage.Content.ReadAs(xlOutputText);
+                Message(xlOutputText);
+            end else begin
+                xlHttpResponseMessage.Content.ReadAs(xlOutputText);
+                Message(xlOutputText);
+            end;
         end;
-
-
-        // end;
     end;
 
 
