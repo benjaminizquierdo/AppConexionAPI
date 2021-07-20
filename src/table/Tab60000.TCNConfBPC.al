@@ -17,6 +17,7 @@ table 60000 "TCNConfBPC"
         }
         field(3; " Password"; Text[250])
         {
+            ExtendedDatatype = Masked;
             Caption = ' Password';
             DataClassification = OrganizationIdentifiableInformation;
         }

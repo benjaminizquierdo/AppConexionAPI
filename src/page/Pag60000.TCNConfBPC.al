@@ -62,29 +62,33 @@ page 60000 "TCNConfBPC"
                     culTCNFunciones.ObtenerAccesoF(Rec.UrlLogin);
                 end;
             }
-            action(ConsulMovCierre)
+            group(Movimientos)
             {
-                ApplicationArea = All;
-                Caption = 'Movimientos Cierre';
-                Image = AbsenceCategories;
-                trigger OnAction()
-                var
-                    culTCNFunciones: Codeunit TCNFunciones;
-                begin
-                    culTCNFunciones.MovCierreF(Rec.UrlMovCierre);
-                end;
-            }
-            action(ConsulMovIntradia)
-            {
-                ApplicationArea = All;
-                Caption = 'Movimientos IntraDia';
-                Image = AbsenceCategories;
-                trigger OnAction()
-                var
-                    culTCNFunciones: Codeunit TCNFunciones;
-                begin
-                    culTCNFunciones.MovIntraDiaF(Rec.UrlMovIntraDia);
-                end;
+                Caption = 'Lectura de Movimientos';
+                action(ConsulMovCierre)
+                {
+                    ApplicationArea = All;
+                    Caption = 'Movimientos Cierre';
+                    Image = AbsenceCategories;
+                    trigger OnAction()
+                    var
+                        culTCNFunciones: Codeunit TCNFunciones;
+                    begin
+                        culTCNFunciones.MovCierreF(Rec.UrlMovCierre);
+                    end;
+                }
+                action(ConsulMovIntradia)
+                {
+                    ApplicationArea = All;
+                    Caption = 'Movimientos IntraDia';
+                    Image = AbsenceCategories;
+                    trigger OnAction()
+                    var
+                        culTCNFunciones: Codeunit TCNFunciones;
+                    begin
+                        culTCNFunciones.MovIntraDiaF(Rec.UrlMovIntraDia);
+                    end;
+                }
             }
         }
     }
