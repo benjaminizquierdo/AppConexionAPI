@@ -56,37 +56,42 @@ codeunit 60000 "TCNFunciones"
     var
         culTCNFuncionesComunes: Codeunit TCN_FuncionesComunes;
         rlTCNConfBPC: Record TCNConfBPC;
+        clContentType: Label 'Content-Type';
+        clAccept: Label 'Accept';
+        clAplicationJson: Label 'application/json';
+        clMetodh: Label 'POST';
         xlHttpClient: HttpClient;
         xlHttpContent: HttpContent;
         xlHttpHeaders: HttpHeaders;
-        xlsd: HttpRequestMessage;
-        xlJsonObj: JsonObject;
-        xlJsonToken: JsonToken;
+        xlHttpRequestMessage: HttpRequestMessage;
         xlTextBuilder: TextBuilder;
         xlHttpResponseMessage: HttpResponseMessage;
         xlOutputText: text;
+        xlBody: text;
     begin
-        if rlTCNConfBPC.FindFirst() then begin
-            xlTextBuilder.AppendLine('{');
-            xlTextBuilder.AppendLine('"user": ' + rlTCNConfBPC.User + ',');
-            xlTextBuilder.AppendLine('"pass": ' + rlTCNConfBPC." Password");
-            xlTextBuilder.AppendLine('}');
-            xlHttpContent.WriteFrom(xlTextBuilder.ToText());
+        xlBody := xlOutputText;
+        xlBody := xlOutputText;
+        xlBody := xlOutputText;
 
-            xlHttpHeaders.Add('Content-Type', 'application/json');
-            xlHttpHeaders.Add('Accept', 'application/json');
+        // xlTextBuilder.Append();
+        xlHttpContent.Clear();
+        xlHttpContent.WriteFrom('{"user": "key","pass": "secret"}');
+        xlHttpContent.GetHeaders(xlHttpHeaders);
 
-            xlHttpContent.GetHeaders(xlHttpHeaders);
-
-            if xlHttpClient.Post(pUrlLogin, xlHttpContent, xlHttpResponseMessage) and (xlHttpResponseMessage.IsSuccessStatusCode) then begin
-                xlHttpResponseMessage.Content.ReadAs(xlOutputText);
-                Message(xlOutputText);
-            end else begin
-                culTCNFuncionesComunes.ErrorF(xlHttpResponseMessage.ReasonPhrase);
-            end;
-
-
+        xlHttpRequestMessage.Content := xlHttpContent;
+        xlHttpRequestMessage.SetRequestUri(pUrlLogin);
+        xlHttpRequestMessage.Method := clMetodh;
+        xlHttpClient.Timeout(-1);
+        if xlHttpClient.Send(xlHttpRequestMessage, xlHttpResponseMessage) and xlHttpResponseMessage.IsSuccessStatusCode then begin
+            xlHttpResponseMessage.Content.ReadAs(xlOutputText);
+            Message(xlOutputText + 'true');
+        end else begin
+            culTCNFuncionesComunes.ErrorF(xlHttpResponseMessage.ReasonPhrase);
+            Message(xlOutputText + 'false');
         end;
+
+
+        // end;
     end;
 
 
