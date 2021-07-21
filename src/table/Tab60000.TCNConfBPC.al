@@ -41,6 +41,43 @@ table 60000 "TCNConfBPC"
             Caption = 'UrlMovCierre';
             DataClassification = OrganizationIdentifiableInformation;
         }
+
+        field(8; UrlSociedades; Text[250])
+        {
+            Caption = 'UrlSociedades';
+            DataClassification = OrganizationIdentifiableInformation;
+        }
+        field(9; UrlBancos; Text[250])
+        {
+            Caption = 'UrlBancos';
+            DataClassification = OrganizationIdentifiableInformation;
+        }
+        field(10; UrlCuentasBancarias; Text[250])
+        {
+            Caption = 'UrlCuentasBancarias';
+            DataClassification = OrganizationIdentifiableInformation;
+        }
+        field(11; UrlTiposCuentasBancarias; Text[250])
+        {
+            Caption = 'UrTiposCuentasBancarias';
+            DataClassification = OrganizationIdentifiableInformation;
+        }
+        field(12; UrlCallBacks; Text[250])
+        {
+            Caption = 'UrlCallBacks';
+            DataClassification = OrganizationIdentifiableInformation;
+        }
+
+        field(13; UrlTiposCallBack; Text[250])
+        {
+            Caption = 'UrlTiposCallBack';
+            DataClassification = OrganizationIdentifiableInformation;
+        }
+        field(14; UrlEliminarCallBacks; Text[250])
+        {
+            Caption = 'UrlEliminarCallBacks';
+            DataClassification = OrganizationIdentifiableInformation;
+        }
     }
     keys
     {

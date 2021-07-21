@@ -1,7 +1,7 @@
 page 60000 "TCNConfBPC"
 {
 
-    Caption = 'Configuracion Conexion API BANKINPLAY CLIENTES';
+    Caption = 'Configuracion BANKINPLAY CLIENTES';
     PageType = Card;
     SourceTable = TCNConfBPC;
     UsageCategory = Administration;
@@ -13,7 +13,7 @@ page 60000 "TCNConfBPC"
     {
         area(content)
         {
-            group(General)
+            group(Creedenciales)
             {
                 field(User; Rec.User)
                 {
@@ -25,6 +25,7 @@ page 60000 "TCNConfBPC"
                     ToolTip = 'Introduzca su contraseña';
                     ApplicationArea = All;
                 }
+
             }
             group(URLs)
             {
@@ -43,6 +44,41 @@ page 60000 "TCNConfBPC"
                     ToolTip = 'URL para obtener los movimientos de cierre (https://app.bankinplay.com/intradia-core/api/v1/statement/lectura_cierre)';
                     ApplicationArea = All;
                 }
+                field(UrlBancos; Rec.UrlBancos)
+                {
+                    ToolTip = 'Url para obtener la lista de bancos';
+                    ApplicationArea = All;
+                }
+                field(UrlCuentasBancarias; Rec.UrlCuentasBancarias)
+                {
+                    ToolTip = 'Url para obtener la lista de cuenta bancarias';
+                    ApplicationArea = All;
+                }
+                field(UrlTiposCuentasBancarias; Rec.UrlTiposCuentasBancarias)
+                {
+                    ToolTip = 'Url para obtener los tipos de cuentas bancarias';
+                    ApplicationArea = All;
+                }
+                field(UrlSociedades; Rec.UrlSociedades)
+                {
+                    ToolTip = 'Url para obtener la lista de sociedades';
+                    ApplicationArea = All;
+                }
+                field(UrlCallBacks; Rec.UrlCallBacks)
+                {
+                    ToolTip = 'Url para listado de callbacks registrados y activos. Misma url para registro de CallBacks';
+                    ApplicationArea = All;
+                }
+                field(UrlEliminarCallBacks; Rec.UrlEliminarCallBacks)
+                {
+                    ToolTip = 'Url para dar de baja la dirección a la que se envía un determinado evento';
+                    ApplicationArea = All;
+                }
+                field(UrlTiposCallBack; Rec.UrlTiposCallBack)
+                {
+                    ToolTip = 'Url para listado de tipo de eventos que se pueden registrar en el sistema.';
+                    ApplicationArea = All;
+                }
             }
         }
     }
@@ -59,36 +95,8 @@ page 60000 "TCNConfBPC"
                 var
                     culTCNFunciones: Codeunit TCNFunciones;
                 begin
-                    culTCNFunciones.ObtenerAccesoF(Rec.UrlLogin);
+                    culTCNFunciones.ObtenerAccesoF();
                 end;
-            }
-            group(Movimientos)
-            {
-                Caption = 'Lectura de Movimientos';
-                action(ConsulMovCierre)
-                {
-                    ApplicationArea = All;
-                    Caption = 'Movimientos Cierre';
-                    Image = AbsenceCategories;
-                    trigger OnAction()
-                    var
-                        culTCNFunciones: Codeunit TCNFunciones;
-                    begin
-                        culTCNFunciones.MovCierreF(Rec.UrlMovCierre);
-                    end;
-                }
-                action(ConsulMovIntradia)
-                {
-                    ApplicationArea = All;
-                    Caption = 'Movimientos IntraDia';
-                    Image = AbsenceCategories;
-                    trigger OnAction()
-                    var
-                        culTCNFunciones: Codeunit TCNFunciones;
-                    begin
-                        culTCNFunciones.MovIntraDiaF(Rec.UrlMovIntraDia);
-                    end;
-                }
             }
         }
     }
