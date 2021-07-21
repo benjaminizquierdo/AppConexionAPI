@@ -147,6 +147,7 @@ codeunit 60000 "TCNFunciones"
         clContentType: Label 'Content-Type';
         clMetodh: Label 'POST';
         xlOutputText: text;
+
     begin
         if rlTCNConfBPC.FindFirst() then begin
             xlHttpContent.Clear();
@@ -183,15 +184,5 @@ codeunit 60000 "TCNFunciones"
         xlsalida := xlTextBuilder.ToText();
     end;
 
-    local procedure SacaraNumTablaPorNombreF(pNombre: Text): Integer
-    var
-        rlAllObjWithCaption: Record AllObjWithCaption;
-    begin
-        rlAllObjWithCaption.SetRange("Object Type", rlAllObjWithCaption."Object Type"::Table);
-        rlAllObjWithCaption.SetRange("Object Name", pNombre);
-        if rlAllObjWithCaption.FindFirst() then begin
-            exit(rlAllObjWithCaption."Object ID");
-        end;
-    end;
 
 }

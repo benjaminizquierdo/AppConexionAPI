@@ -9,6 +9,13 @@ page 60001 TCNConsultarBPC
     InsertAllowed = false;
     DeleteAllowed = false;
 
+    layout
+    {
+        area(Content)
+        {
+
+        }
+    }
     actions
     {
         area(Processing)
@@ -27,6 +34,7 @@ page 60001 TCNConsultarBPC
                     pglTCNConfBPC.Run();
                 end;
             }
+
             action(ObtAcceso)
             {
                 ApplicationArea = All;
