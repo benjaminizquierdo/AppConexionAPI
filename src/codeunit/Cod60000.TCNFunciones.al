@@ -2,6 +2,8 @@ codeunit 60000 "TCNFunciones"
 {
     var
         cBearerAuth: Label 'Bearer %1';
+
+
     // //PENDIENTE PRUEBA OBTENER JSON
     // procedure Prueba1()
     // var
